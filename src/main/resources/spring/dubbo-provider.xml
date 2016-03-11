@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ - Copyright 1999-2011 Alibaba Group.
+ -  
+ - Licensed under the Apache License, Version 2.0 (the "License");
+ - you may not use this file except in compliance with the License.
+ - You may obtain a copy of the License at
+ -  
+ -      http://www.apache.org/licenses/LICENSE-2.0
+ -  
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS,
+ - WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ - See the License for the specific language governing permissions and
+ - limitations under the License.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+   
+     <!--注册中心zookeeper集群  -->
+    <dubbo:registry address="zookeeper://zookeeper.mtech.com.cn:2181?backup=zookeeper.mtech.com.cn:2182,zookeeper.mtech.com.cn:2183"/>
+    <dubbo:monitor protocol="registry"/>
+    
+    <!-- 协议使用优先性级：dubbo>rmi>hessian -->
+    <!--传入传出参数数据包较小（建议小于100K），消费者比提供者个数多，单一消费者无法压满提供者，尽量不要用dubbo协议传输大文件或超大字符串。  -->
+    <dubbo:protocol name="dubbo" port="20881" />
+    <!-- 原生rmi支持参数比较复杂的方法 -->
+     <dubbo:protocol name="rmi" port="1099" />
+    <!--协议的端口必须与servlet容器的端口相同，协议的上下文路径contextpath必须与servlet应用的上下文路径相同。 -->
+    <!-- 文件传输 -->         
+    <dubbo:protocol name="hessian" port="9090" server="servlet" contextpath="mt-dubbo-provider-web" />
+    
+    
+    <!-- 应用名称 -->
+    <dubbo:application name="mt-dubbo-provider-web" owner="mingqincai" organization="wangzhong"/>
+    <!-- 声明需要暴露的服务接口 -->
+    <dubbo:service interface="com.mtech.scheduler.core.service.AppService" ref="appServiceImpl" protocol="dubbo,rmi"/>
+    <dubbo:service interface="com.mtech.scheduler.core.service.DubboAppService" ref="dubboAppServiceImpl" protocol="dubbo"/>
+    <dubbo:service interface="com.mtech.scheduler.core.service.DubboUserService" ref="dubboUserServiceImpl" protocol="dubbo"/>
+   
+    <dubbo:service interface="com.mtech.scheduler.core.service.DubboFileService" ref="dubboFileServiceImpl" path="provider/dubboFileService" protocol="hessian"/>
+   
+    <dubbo:service interface="com.mtech.usr.service.UserHelpFavoriteService" ref="userHelpFavoriteServiceImpl" protocol="dubbo"/>
+    <dubbo:service interface="com.mtech.usr.service.UserSuggestService" ref="userSuggestServiceImpl" protocol="dubbo"/>
+    <dubbo:service interface="com.mtech.usr.service.UserService" ref="userServiceImpl" protocol="dubbo"/>
+
+</beans>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:cache="http://www.springframework.org/schema/cache"
+	xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+       http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd">
+
+	<description>定义项目所使用的缓存</description>
+
+	<cache:annotation-driven cache-manager="redisCacheManager"
+		key-generator="customKeyGenerator" />
+
+	<bean id="customKeyGenerator" class="com.mtech.common.cache.CustomKeyGenerator" />
+
+	<bean id="redisCacheManager" class="com.mtech.common.cache.redis.RedisCacheManager">
+		<property name="client" ref="redisTemplate" />
+		<property name="maxElements" value="10000" />
+		<property name="expire" value="3000" />
+	</bean>
+
+   <!-- 高可用分布式集群配置 -->
+	<!-- <bean id="redisSentinelConfiguration"
+		class="org.springframework.data.redis.connection.RedisSentinelConfiguration">
+		<property name="master">
+			<bean class="org.springframework.data.redis.connection.RedisNode">
+				<property name="name" value="mymaster"></property>
+			</bean>
+		</property>
+		<property name="sentinels">
+			<set>
+				<bean class="org.springframework.data.redis.connection.RedisNode">
+					<constructor-arg index="0" value="120.24.77.7" />
+					<constructor-arg index="1" value="6379" />
+				</bean>
+				<bean class="org.springframework.data.redis.connection.RedisNode">
+					<constructor-arg index="0" value="10.6.1**.**6" />
+					<constructor-arg index="1" value="7031" />
+				</bean>
+				<bean class="org.springframework.data.redis.connection.RedisNode">
+					<constructor-arg index="0" value="10.6.1**.**1" />
+					<constructor-arg index="1" value="7031" />
+				</bean>
+			</set>
+		</property>
+	</bean> -->
+
+    <bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">  
+        <property name="maxIdle" value="100" />  
+        <property name="minIdle" value="10" />  
+        <property name="maxTotal" value="600" />  
+        <property name="testOnBorrow" value="true" />  
+    </bean>  
+    
+	<bean id="jedisConnFactory"
+		class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+		<property name="hostName" value="redis.mtech.com.cn" />
+		<property name="port" value="6379" />
+        <property name="poolConfig" ref="poolConfig" />
+        <property name="timeout" value="6000" />
+       <!--  <property name="sentinelConfig" ref="redisSentinelConfiguration" /> -->
+	</bean>
+
+	<bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+		<property name="connectionFactory" ref="jedisConnFactory" />
+	</bean>
+
+
+
+</beans>

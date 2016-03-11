@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taglib xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
+        version="2.1">
+    <tlib-version>0.0.1</tlib-version>
+    <short-name>util</short-name>
+    <uri>http://com.mtech/tags/tbsptag</uri>
+    <tag>
+        <name>dict</name>
+        <tag-class>com.mtech.web.tag.DictTag</tag-class>
+        <body-content>JSP</body-content>
+        <attribute>
+            <name>id</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>name</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>dictType</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+         <attribute>
+            <name>dictCode</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+         <attribute>
+            <name>display</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>defaultvalue</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>validate</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>onclick</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>onchange</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>ligerui</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>tag</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>clazz</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>hasEmpty</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+    <tag>
+		<description>权限校验标签，有权限就显示标签体的内容，否则不显示</description>
+		<name>permission</name> <!-- 标签名 -->
+		<tag-class>com.mtech.web.tag.PermissionTag</tag-class> <!-- 标签类 -->
+		<body-content>JSP</body-content>
+		  <attribute>
+            <name>resourceId</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+	</tag>
+	 <tag>
+		<description>navigate</description>
+		<name>navigate</name> <!-- 标签名 -->
+		<tag-class>com.mtech.web.tag.NavigateTag</tag-class> <!-- 标签类 -->
+		<body-content>JSP</body-content>
+		  <attribute>
+            <name>code</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>currentPageName</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+	</tag>
+	<tag>
+		<description>toolbar</description>
+		<name>toolbar</name> <!-- 标签名 -->
+		<tag-class>com.mtech.web.tag.ToolBarTag</tag-class> <!-- 标签类 -->
+		<body-content>JSP</body-content>
+		 <attribute>
+            <name>id</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+		  <attribute>
+            <name>resourceCode</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+	</tag>
+	<tag>
+		<description>pureTag</description>
+		<name>pureTag</name> <!-- 标签名 -->
+		<tag-class>com.mtech.web.tag.PureTag</tag-class> <!-- 标签类 -->
+		<body-content>tagdependent</body-content>
+	</tag>
+	<tag>
+		<description>appCtx</description>
+		<name>appCtx</name> <!-- 标签名 -->
+		<tag-class>com.mtech.web.tag.AppCtxTag</tag-class> <!-- 标签类 -->
+		<body-content>JSP</body-content>
+		 <attribute>
+            <name>appName</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+	</tag>
+</taglib>
